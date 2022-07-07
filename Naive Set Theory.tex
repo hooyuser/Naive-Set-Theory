@@ -1,0 +1,148 @@
+\documentclass{report}
+% Comment the following line to NOT allow the usage of umlauts
+\usepackage[utf8]{inputenc}
+% Uncomment the following line to allow the usage of graphics (.png, .jpg)
+
+\usepackage{geometry}
+\geometry{left=3cm,right=3cm,top=3cm,bottom=3cm}
+
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[colorlinks,linkcolor=NavyBlue,citecolor=green, urlcolor=green]{hyperref}
+
+
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{array,makecell}
+\usepackage{multirow}
+
+\usepackage{amsmath,amsfonts}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage[thmmarks,amsmath]{ntheorem}
+\usepackage[all]{xy}
+\usepackage{tikz}
+
+
+\theorembodyfont{\upshape}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\itshape}
+\theorembodyfont{\normalfont}
+\theoremsymbol{\\ \rightline{$\square$}}
+\newtheorem{proof}{Proof.}
+
+\newcommand{\Top}{\mathsf{Top}}
+\newcommand{\Grp}{\mathsf{Grp}}
+\newcommand{\Grpd}{\mathsf{Grpd}}
+\newcommand{\Obj}{\mathrm{Obj}}
+\newcommand{\Hom}{\mathrm{Hom}}
+
+\DeclareMathOperator*\lowlim{\underline{lim}}
+\DeclareMathOperator*\uplim{\overline{lim}}
+
+% Start the document
+\begin{document}
+\begin{center}
+	~\\
+	\vspace{6em}
+	\textsc{\Huge Naive Set Theory}
+	~\\
+	\vspace{2.5em}
+	{\Large }
+	~\\
+	\vspace{6em}
+	\textsf{Huyi Chen}
+	~\\
+	\vspace{5in}
+	{\large Latest Update: \today}
+\end{center}
+\newpage
+\tableofcontents
+% Create a new 1st level heading
+\chapter{Set}
+\section{Basic Operations}
+\begin{definition}[union and intersection]
+	\begin{align*}
+		\bigcup_{i\in I} A_i&:=\left\{x:\exists\,i\in I,x\in A_i \right\}\\
+		\bigcap_{i\in I} A_i&:=\left\{x:\forall\,i\in I,x\in A_i \right\}
+	\end{align*}
+\end{definition}
+\begin{proposition}[properties of union and intersection]
+	Suppose that $A_\alpha,A,B_\alpha,B$ are sets and $I$ is some index set. We have
+	\begin{itemize}
+		\item distribution law: $A\cap\left(\bigcup\limits_{\alpha\in I}B_\alpha\right)=\bigcup\limits_{\alpha\in I}\left(A\cap B_\alpha\right)\ $, $A\cup\left(\bigcap\limits_{\alpha\in I}B_\alpha\right)=\bigcap\limits_{\alpha\in I}\left(A\cup B_\alpha\right)$.
+	\end{itemize}
+\end{proposition}
+
+\begin{proposition}[De Morgan]
+	Suppose that $A_\alpha,A$ are sets and $I$ is some index set. We have
+	\begin{itemize}
+		\item $\left(\bigcup\limits_{\alpha\in I}A_\alpha\right)^C=\bigcap\limits_{\alpha\in I}A_\alpha^{\,C}\ $, $\left(\bigcap\limits_{\alpha\in I}A_\alpha\right)^C=\bigcup\limits_{\alpha\in I}A_\alpha^{\,C}$
+		\item $E-\bigcup\limits_{\alpha\in I}A_\alpha=\bigcap\limits_{\alpha\in I}\left(E-A_\alpha\right)\ $, $E-\bigcap\limits_{\alpha\in I}A_\alpha=\bigcup\limits_{\alpha\in I}\left(E-A_\alpha\right)\ $
+	\end{itemize}
+\end{proposition}
+
+\section{Limit}
+\begin{definition}[upper limit]
+	Let $\{A_n\}_{n=1}^{\infty}$ be a sequence of sets.
+	\begin{align*}
+		\uplim_{n\to\infty}A_n&:=\bigcap_{n=1}^\infty\bigcup_{k=n}^\infty A_k=\left\{x:x\text{ belongs to infinitely many sets in }\{A_n\}\right\}
+	\end{align*}
+\end{definition}
+\[
+	x\in \uplim_{n\to\infty}A_n\iff \forall n\ge1,\exists k\ge n,x\in A_k.
+\]
+
+\begin{definition}[lower limit]
+	Let $\{A_n\}_{n=1}^{\infty}$ be a sequence of sets.
+	\begin{align*}
+		\lowlim_{n\to\infty}A_n&:=\bigcup_{n=1}^\infty\bigcap_{k=n}^\infty A_k=\left\{x:x\text{ belongs to all but finitely many sets in }\{A_n\}\right\}\\
+	\end{align*}
+\end{definition}
+\begin{proposition}[property of upper limit and lower limit]
+	\[
+		\bigcap_{n=1}^\infty A_n\subset\lowlim_{n\to\infty}A_n\subset\uplim_{n\to\infty}A_n\subset \bigcup_{n=1}^\infty A_n.
+	\]
+\end{proposition}
+\begin{definition}[limit]
+	Let $\{A_n\}_{n=1}^{\infty}$ be a sequence of sets. If 
+	$\lowlim\limits_{n\to\infty}A_n=\uplim\limits_{n\to\infty}A_n$, we define the \emph{limit} of $\{A_n\}_{n=1}^{\infty}$ as follows 
+	\[
+		\lim\limits_{n\to\infty}A_n:=\lowlim\limits_{n\to\infty}A_n=\uplim\limits_{n\to\infty}A_n
+	\]
+\end{definition}
+\begin{proposition}
+	Let $\{A_n\}_{n=1}^{\infty}$ be a sequence of sets.
+	\begin{enumerate}
+		\item If $\{A_n\}_{n=1}^{\infty}$ is nondecreasing, then it has limit
+		\[
+			\lim\limits_{n\to\infty}A_n=\bigcup_{n=1}^\infty A_n.
+		\]
+		\item If $\{A_n\}_{n=1}^{\infty}$ is nonincreasing, then it has limit
+		\[
+			\lim\limits_{n\to\infty}A_n=\bigcap_{n=1}^\infty A_n.
+		\]
+	\end{enumerate}
+	
+\end{proposition}
+
+
+\chapter{Function}
+Let $f:X\to Y$ be a map. Suppose that $A_\alpha,A,E\subset X$ and $B_\alpha,B,F\subset Y$. We have
+\begin{itemize}
+	\item $f\left(\bigcup\limits_{\alpha\in I}A_\alpha\right)=\bigcup\limits_{\alpha\in I}f\left(A_\alpha\right)\ $, $f\left(\bigcap\limits_{\alpha\in I}A_\alpha\right)\subset\bigcap\limits_{\alpha\in I}f\left(A_\alpha\right)\ $, $f(E-A)\supset f(E)-f(A)$.
+	\item $f^{-1}\left(\bigcup\limits_{\alpha\in I}B_\alpha\right)=\bigcup\limits_{\alpha\in I}f^{-1}\left(B_\alpha\right)\ $, $f^{-1}\left(\bigcap\limits_{\alpha\in I}B_\alpha\right)=\bigcap\limits_{\alpha\in I}f^{-1}\left(B_\alpha\right)\ $, $f^{-1}(F-B)=f^{-1}(F)-f^{-1}(B)$.
+	\item $A\subset f^{-1}(f(A))\ $, $B\supset f(f^{-1}(B))$.
+\end{itemize}
+
+
+
+\end{document}
+
